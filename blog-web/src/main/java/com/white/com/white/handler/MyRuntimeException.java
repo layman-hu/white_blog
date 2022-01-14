@@ -1,17 +1,19 @@
-package com.white;
+package com.white.com.white.handler;
 
-public enum ResultInfo {
-    NOT_FOUND("404", "没有找到"),
-    SUCCESS("200", "操作成功"),
-    GLOBAL_ERROR("101","系统繁忙"),
-    ;
+import com.white.ResultInfo;
 
+public class MyRuntimeException extends RuntimeException{
     private String code;
     private String message;
 
-    ResultInfo(String code, String message) {
+    public MyRuntimeException(String code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public MyRuntimeException(ResultInfo resultInfo) {
+        this.code = resultInfo.getCode();
+        this.message = resultInfo.getMessage();
     }
 
     public String getCode() {
@@ -22,6 +24,7 @@ public enum ResultInfo {
         this.code = code;
     }
 
+    @Override
     public String getMessage() {
         return message;
     }

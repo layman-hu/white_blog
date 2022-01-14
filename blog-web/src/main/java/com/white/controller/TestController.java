@@ -3,6 +3,7 @@ package com.white.controller;
 import com.white.ResultInfo;
 import com.white.api.TestService;
 import com.white.Result;
+import com.white.com.white.handler.MyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,10 @@ public class TestController {
     @GetMapping("/test")
     public Result test(){
         String test = testService.test();
-        if(StringUtils.hasLength(test)){
-            return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("data",test);
-        }
-        else return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        throw new MyRuntimeException("111","自定义异常");
+//        if(StringUtils.hasLength(test)){
+//            return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("data",test);
+//        }
+//        else return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
     }
 }
