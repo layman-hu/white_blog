@@ -1,4 +1,4 @@
-package com.white.com.white.handler;
+package com.white.handler;
 
 import com.white.ResultInfo;
 
