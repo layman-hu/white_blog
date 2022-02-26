@@ -22,43 +22,23 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("tb_user")
-@ApiModel(value="User对象", description="")
-public class User implements Serializable {
+@TableName("tb_role")
+@ApiModel(value="Role对象", description="")
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键，ID")
+    @ApiModelProperty(value = "角色主键")
     @TableId(value = "ID", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "用户名")
-    @TableField("USERNAME")
-    private String username;
-
-    @ApiModelProperty(value = "用户密码")
-    @TableField("PASSWORD")
-    private String password;
-
-    @ApiModelProperty(value = "昵称")
-    @TableField("NICKNAME")
-    private String nickname;
-
-    @ApiModelProperty(value = "头像，地址")
-    @TableField("AVATAR")
-    private String avatar;
+    @ApiModelProperty(value = "角色名")
+    @TableField("ROLE_NAME")
+    private String roleName;
 
     @ApiModelProperty(value = "创建时间")
     @TableField("CREATE_TIME")
     private Date createTime;
-
-    @ApiModelProperty(value = "更新时间")
-    @TableField("UPDATE_TIME")
-    private Date updateTime;
-
-    @ApiModelProperty(value = "个人简介")
-    @TableField("INTRODUCE")
-    private String introduce;
 
 
 }

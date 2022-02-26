@@ -1,7 +1,7 @@
 package com.white.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.white.mapper.UserMapper;
-import com.white.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author white
- * @since 2022-02-01
+ * @since 2022-02-26
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IService<User> {
 
 }

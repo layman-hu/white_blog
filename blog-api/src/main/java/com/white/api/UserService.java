@@ -1,6 +1,7 @@
-package com.white.service;
+package com.white.api;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.white.entity.User;
 
 /**
  * <p>
@@ -8,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author white
- * @since 2022-02-01
+ * @since 2022-02-26
  */
 public interface UserService extends IService<User> {
 

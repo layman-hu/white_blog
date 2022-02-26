@@ -1,7 +1,6 @@
 package com.white.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -9,9 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author white
- * @since 2022-02-01
+ * @since 2022-02-26
  */
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }
