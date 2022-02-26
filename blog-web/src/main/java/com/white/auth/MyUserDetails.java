@@ -1,5 +1,6 @@
 package com.white.auth;
 
+import com.white.entity.User;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

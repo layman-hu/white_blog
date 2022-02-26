@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.white.mapper.UserMapper">
 
+    <select id="getUserRolesByUserId" resultType="java.lang.String">
+        select ROLE_NAME
+        from con_role_user a, tb_role b
+        where a.ID=#{id} and b.ID=#{id}
+    </select>
 </mapper>

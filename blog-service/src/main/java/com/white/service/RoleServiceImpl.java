@@ -1,8 +1,10 @@
-package com.white.service.impl;
+package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.white.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.white.api.RoleService;
+import com.white.entity.Role;
+import com.white.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-02-26
  */
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IService<User> {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
 }

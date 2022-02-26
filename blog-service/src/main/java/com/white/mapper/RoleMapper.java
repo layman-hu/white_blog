@@ -1,6 +1,8 @@
 package com.white.mapper;
 
+import com.white.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -10,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author white
  * @since 2022-02-26
  */
-public interface UserMapper extends BaseMapper<User> {
+
+@Mapper
+public interface RoleMapper extends BaseMapper<Role> {
 
 }
