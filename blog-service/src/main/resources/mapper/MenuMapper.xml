@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.white.mapper.MenuMapper">
+
+    <select id="getAllMenuList" resultType="com.white.entity.Menu">
+        select
+        a.ID,
+        a.MENU,
+        a.URL,
+        a.ICON,
+        a.PARENT_ID,
+        a.DISABLED
+        from tb_menu a, con_role_menu b, tb_role c
+        where c.ROLE_NAME=#{roleName} AND
+        a.ID = b.MENU_ID AND
+        c.ID = b.ROLE_ID
+    </select>
+</mapper>
