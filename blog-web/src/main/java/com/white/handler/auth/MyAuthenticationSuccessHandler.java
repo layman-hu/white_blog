@@ -44,6 +44,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 //                roles.add(role.getAuthority());
 //            }
 //
+        //
 //            response.getWriter().write(
 //                    objectMapppr.writeValueAsString(
 //                            Result.success().codeAndMessage(ResultInfo.LOGIN_SUCCESS)
