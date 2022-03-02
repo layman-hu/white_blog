@@ -2,9 +2,15 @@ enable:
   swagger2: true
  application.yml这里，上线时改成false
 
+ com.white.service.ArticleServiceImpl
+  //涉及到增删改查，有事务问题
+
  递归调用时，List<Type> list = new ArrayList<>();
  list需要初始化，不然无法识别list类型，会抛出java.lang.NullPointerException空指针
 
  发送GET请求时，参数不需要写成json形式，直接以表单格式提交即可
 
  SQL条件查询语法不熟练，产生了一个BUG，导致查找失败
+
+ JAVA Iterator.remove()
+ Iterator不允许直接修改列表元素，不然会报错

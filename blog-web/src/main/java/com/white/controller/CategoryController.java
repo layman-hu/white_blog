@@ -3,8 +3,9 @@ package com.white.controller;
 
 import com.white.Result;
 import com.white.ResultInfo;
-import com.white.api.RoleService;
-import com.white.dto.RoleDTO;
+import com.white.api.CategoryService;
+import com.white.entity.Category;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,25 +20,26 @@ import java.util.List;
  * </p>
  *
  * @author white
- * @since 2022-02-26
+ * @since 2022-03-02
  */
 @RestController
-@RequestMapping("/role")
-public class RoleController {
-
+@RequestMapping("/category")
+public class CategoryController {
     @Autowired
-    private RoleService roleService;
+    private CategoryService categoryService;
 
-    @GetMapping("/getRoleList")
-    public Result getRoleList(){
-        List<RoleDTO> roleDTOList = roleService.getRoleList();
-        if (!roleDTOList.isEmpty()){
+    @ApiOperation("获取分类列表")
+    @GetMapping("getCategoryList")
+    public Result getCategoryList(){
+        List<Category> categoryList = categoryService.list();
+        if(!categoryList.isEmpty()){
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("roleList",roleDTOList);
+                    .data("categoryList",categoryList);
         }else {
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
         }
+
     }
 }
 

@@ -8,6 +8,8 @@ import com.white.dto.MenuDTO;
 import com.white.entity.Menu;
 import com.white.entity.Role;
 import com.white.mapper.MenuMapper;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +35,11 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @ApiOperation("根据用户角色获取对应权限的菜单")
     @GetMapping("/getMenuListByUserRole")
     public Result getMenuListByUserRole(@RequestParam("roleName")String roleName){
         List<Menu> menuList = menuService.getAllMenuListByUserRole(roleName);
-        if(menuList.size() > 0) {
+        if(!menuList.isEmpty()) {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("menuList",menuList);
         }else {
             return Result.error();
