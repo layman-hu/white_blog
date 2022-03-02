@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,5 +53,6 @@ public class Menu implements Serializable {
     private Boolean disabled;
 
     @TableField(exist = false)
-    private List<Menu> children;
+    private List<Menu> children = new ArrayList<>();
+
 }

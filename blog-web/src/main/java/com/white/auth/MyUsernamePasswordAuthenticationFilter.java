@@ -1,6 +1,7 @@
 package com.white.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.white.LoggerInfo;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,20 +37,15 @@ public class MyUsernamePasswordAuthenticationFilter extends UsernamePasswordAuth
                 e.printStackTrace();
             }
             if(map != null){
-                String username = map.get("username");
+                String username = map.get("userName");
                 String password = map.get("password");
 
-//                System.out.println("com.white.auth.MyUsernamePasswordAuthenticationFilter");
-//                System.out.println("MyUsernamePasswordAuthenticationFilter:");
-//                System.out.println("username:\t"+username);
-//                System.out.println("password:\t"+password);
-//                System.out.println();
-
-                Logger logger = Logger.getLogger("com.white.auth.MyUsernamePasswordAuthenticationFilter");
-                logger.info("MyUsernamePasswordAuthenticationFilter:");
-                logger.info("username:\t"+username);
-                logger.info("password:\t"+password);
-                logger.info("");
+                LoggerInfo.initialization()
+                        .loggerName("com.white.auth.MyUsernamePasswordAuthenticationFilter")
+                        .messages("MyUsernamePasswordAuthenticationFilter:")
+                        .messages("userName:\t"+username)
+                        .messages("password:\t"+password)
+                        .output();
 
                 if(username == null){
                     username = "";

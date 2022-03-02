@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.white.mapper.RoleMapper">
 
+    <select id="getRoleList" resultType="com.white.dto.RoleDTO">
+        <!--按ROLE_NAME类型进行分组计数-->
+        select
+        a.ROLE_NAME,
+        count(a.ROLE_NAME) as roleCount
+        from tb_role a
+        group by a.ROLE_NAME
+    </select>
 </mapper>

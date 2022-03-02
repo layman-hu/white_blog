@@ -2,6 +2,7 @@ package com.white.handler.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.white.LoggerInfo;
 import com.white.Result;
 import com.white.ResultInfo;
 import com.white.auth.MyUserDetails;
@@ -55,10 +56,15 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        Logger logger = Logger.getLogger("com.white.handler.auth.MyAuthenticationSuccessHandler");
-        logger.info("MyAuthenticationSuccessHandler:");
-        logger.info("登录验证成功了");
-        logger.info("");
+//        Logger logger = Logger.getLogger("com.white.handler.auth.MyAuthenticationSuccessHandler");
+//        logger.info("MyAuthenticationSuccessHandler:");
+//        logger.info("登录验证成功了");
+//        logger.info("");
+        LoggerInfo.initialization()
+                .loggerName("com.white.handler.auth.MyAuthenticationSuccessHandler")
+                .messages("MyAuthenticationSuccessHandler:")
+                .messages("登录验证成功了")
+                .output();
 
         ObjectMapper objectMapppr = new ObjectMapper();
         Object principal = authentication.getPrincipal();

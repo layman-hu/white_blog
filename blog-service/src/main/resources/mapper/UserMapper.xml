@@ -7,4 +7,26 @@
         from con_role_user a, tb_role b
         where a.ID=#{id} and b.ID=#{id}
     </select>
+    <select id="getUserByCondition" resultType="com.white.dto.UserDTO">
+        select
+        a.AVATAR,
+        a.NICK_NAME,
+        a.CREATE_TIME,
+        a.UPDATE_TIME,
+        a.IS_SILENCE
+        from tb_user a,tb_role b,con_role_user c
+        where
+        a.ID=c.USER_ID and
+        b.ID=c.ROLE_ID
+        <if test="userQueryVO.roleName!=null and userQueryVO.roleName!='' ">
+            and b.ROLE_NAME=#{userQueryVO.roleName}
+        </if>
+        <if test="userQueryVO.nickName!=null and userQueryVO.nickName!='' ">
+            <!--模糊查询-->
+            and a.NICK_NAME like concat(concat('%',#{userQueryVO.nickName}),'%')
+        </if>
+        <!--用户列表分页  limit#{startindex},#{pagesize}-->
+        limit #{userQueryVO.currentPageNumber},#{userQueryVO.pageSize}<!---->
+        <!--LIMIT 0,2-->
+    </select>
 </mapper>

@@ -1,7 +1,9 @@
 package com.white.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.white.dto.UserDTO;
 import com.white.entity.User;
+import com.white.vo.UserQueryVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +25,10 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<String> getUserRolesByUserId(@Param("id") Integer id);
+
+    /**
+     * 条件查询用户信息
+     * @return
+     */
+    List<UserDTO> getUserByCondition(@Param("userQueryVO") UserQueryVO userQueryVO);
 }

@@ -2,6 +2,7 @@ package com.white.auth;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.white.LoggerInfo;
 import com.white.api.UserService;
 import com.white.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,16 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",username);
+//        wrapper.eq("userName",username);
+        wrapper.eq("USER_NAME",username);
         User user = userService.getOne(wrapper);
 
-        Logger logger = Logger.getLogger("com.white.auth.MyUserDetailsService");
-        logger.info("MyUserDetailsService:");
-        logger.info("user:\t" + user);
-        logger.info("");
+
+        LoggerInfo.initialization()
+                .loggerName("com.white.auth.MyUserDetailsService")
+                .messages("MyUserDetailsService:")
+                .messages("user:\t" + user)
+                .output();
 
         //查找到对应的用户数据
         if(user == null){
@@ -42,13 +46,16 @@ public class MyUserDetailsService implements UserDetailsService {
         //获取用户角色
         List<String> roles = userService.getUserRolesByUserId(user.getId());
         if(roles.size() <= 0){
-            logger.info("获取的用户角色为空，检查是否存在错误");
-            logger.info("");
+            LoggerInfo.initialization()
+                    .loggerName("com.white.auth.MyUserDetailsService")
+                    .messages("MyUserDetailsService:")
+                    .messages("获取的用户角色为空，检查是否存在错误")
+                    .output();
         }
 
         MyUserDetails userDetails = new MyUserDetails();
         userDetails.setUser(user);
-        userDetails.setUsername(user.getUsername());
+        userDetails.setUsername(user.getUserName());
         //{noop}未加密
         userDetails.setPassword("{noop}" + user.getPassword());
 

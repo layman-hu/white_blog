@@ -33,16 +33,16 @@ public class User implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "用户名")
-    @TableField("USERNAME")
-    private String username;
+    @TableField("USER_NAME")
+    private String userName;
 
     @ApiModelProperty(value = "用户密码")
     @TableField("PASSWORD")
     private String password;
 
     @ApiModelProperty(value = "昵称")
-    @TableField("NICKNAME")
-    private String nickname;
+    @TableField("NICK_NAME")
+    private String nickName;
 
     @ApiModelProperty(value = "头像，地址")
     @TableField("AVATAR")
@@ -60,5 +60,11 @@ public class User implements Serializable {
     @TableField("INTRODUCE")
     private String introduce;
 
+    @ApiModelProperty(value = "1禁言 0正常发言")
+    @TableField("IS_SILENCE")
+    private Boolean isSilence;
 
+    @ApiModelProperty(value = "1逻辑删除 0未删除")
+    @TableField("LOGIC_DELETE")
+    private Boolean logicDelete;
 }

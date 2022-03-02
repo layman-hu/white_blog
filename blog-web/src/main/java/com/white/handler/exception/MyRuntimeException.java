@@ -1,4 +1,4 @@
-package com.white.handler;
+package com.white.handler.exception;
 
 import com.white.ResultInfo;
 

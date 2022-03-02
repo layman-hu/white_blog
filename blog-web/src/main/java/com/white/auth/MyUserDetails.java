@@ -17,7 +17,7 @@ public class MyUserDetails implements UserDetails {
     private User user;
 
     private String password;
-    private String username;
+    private String userName;
     private Set<GrantedAuthority> authorities;
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
@@ -37,7 +37,7 @@ public class MyUserDetails implements UserDetails {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public void setAuthorities(Set<GrantedAuthority> authorities) {
@@ -72,7 +72,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return userName;
     }
 
     @Override
