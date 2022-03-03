@@ -1,8 +1,8 @@
 package com.white.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.white.api.ArticleService;
+import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.mapper.ArticleMapper;
 import com.white.vo.AddArticleVO;
@@ -53,7 +53,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (i<0){
             return -1;
         }
-
         return i;
+    }
+
+    @Override
+    public List<ArticleListDTO> listArticlePage(Integer currentPageNumber, Integer pageSize, String articleTitle) {
+        Integer sqlQueryNumber = (currentPageNumber-1)*pageSize;
+        return this.baseMapper.listArticlePage(sqlQueryNumber,pageSize,articleTitle);
+    }
+
+    @Override
+    public Integer deleteArticleById(Integer articleId) {
+        return this.baseMapper.deleteArticleById(articleId);
     }
 }

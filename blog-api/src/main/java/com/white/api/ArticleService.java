@@ -1,8 +1,11 @@
 package com.white.api;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.vo.AddArticleVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +22,20 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     Integer saveOrUpdateArticle(AddArticleVO addArticleVO);
+
+    /**
+     * 分页获取文章列表
+     * @param currentPageNumber
+     * @param pageSize
+     * @param articleTitle
+     * @return
+     */
+    List<ArticleListDTO> listArticlePage(Integer currentPageNumber, Integer pageSize, String articleTitle);
+
+    /**
+     * 根据文章ID，删除文章，同时删除与之关联的标签和分类
+     * @param articleId
+     * @return
+     */
+    Integer deleteArticleById(Integer articleId);
 }

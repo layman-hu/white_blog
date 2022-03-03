@@ -14,3 +14,5 @@ enable:
 
  JAVA Iterator.remove()
  Iterator不允许直接修改列表元素，不然会报错
+
+ SQL语句复杂成分可以用resultMap

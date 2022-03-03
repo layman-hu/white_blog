@@ -8,6 +8,8 @@ import com.white.entity.Tag;
 import com.white.mapper.TagMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -19,4 +21,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
 
+    @Override
+    public List<String> getTagListByArticleId(Integer articleId) {
+        return this.baseMapper.getTagListByArticleId(articleId);
+    }
 }

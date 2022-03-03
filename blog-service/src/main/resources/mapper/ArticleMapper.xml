@@ -23,4 +23,50 @@
             </foreach>
         </if>
     </insert>
+
+
+    <delete id="deleteArticleById">
+        delete tb_article, con_article_tag
+        from tb_article
+        inner join con_article_tag on tb_article.ID = con_article_tag.ARTICLE_ID
+        where tb_article.ID = #{articleId}
+    </delete>
+
+
+    <select id="listArticlePage" resultType="com.white.dto.ArticleListDTO">
+        select
+        a.ID as articleId,
+        a.TITLE as articleTitle,
+        b.CATEGORY as category,
+        a.CREATE_TIME as createTime,
+        a.UPDATE_TIME as updateTime,
+        a.IS_TOP as isTop
+        from tb_article a, tb_category b
+        where
+
+        a.CATEGORY_ID = b.ID
+        <if test="articleTitle != null and articleTitle != '' ">
+            and a.TITLE like concat(concat('%',#{articleTitle}),'%')
+        </if>
+        limit #{sqlQueryNumber},#{pageSize}
+    </select>
+    <!--上述代码存在bug，sqlQueryNumber=pageSize=2时，会报错
+    <resultMap id="ArticleListPageMap" type="com.white.dto.ArticleListDTO">
+        <result column="ID" property="articleId"></result>
+        <result column="TITLE" property="articleTitle"></result>
+        <result column="CATEGORY" property="category"></result>
+        <result column="CREATE_TIME" property="createTime"></result>
+        <result column="UPDATE_TIME" property="updateTime"></result>
+        <collection property="tagList" ofType="string">
+            <result column="TAG_NAME"></result>
+        </collection>
+    </resultMap>
+    c.`TAG_NAME`,
+    a.ID = d.ARTICLE_ID and
+    , tb_tag c, con_article_tag d
+    and
+        c.ID = d.TAG_ID
+
+    -->
+
 </mapper>

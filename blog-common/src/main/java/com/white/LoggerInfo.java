@@ -35,6 +35,7 @@ public class LoggerInfo {
     public LoggerInfo messages(String msgName,Object msg) throws JsonProcessingException {
         this.getMessages().add(msgName+":\t");
         this.getMessages().add(new ObjectMapper().writeValueAsString(msg));
+//        this.getMessages().add(msg.toString());
         return this;
     }
 
