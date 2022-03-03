@@ -1,6 +1,7 @@
 package com.white.api;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.vo.AddArticleVO;
@@ -38,4 +39,13 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     Integer deleteArticleById(Integer articleId);
+
+    List<ArticleDTO> homePageArticles(Integer currentPageNumber);
+
+//    /**
+//     * 根据文章ID，获取文章
+//     * @param articleId
+//     * @return
+//     */
+//    List<Article> getArticleById(Integer articleId);
 }

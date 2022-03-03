@@ -5,7 +5,9 @@ import com.white.Result;
 import com.white.ResultInfo;
 import com.white.api.ArticleService;
 import com.white.api.TagService;
+import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
+import com.white.entity.Article;
 import com.white.vo.AddArticleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +84,49 @@ public class ArticleController {
             return Result.error().codeAndMessage("406","服务器无法根据客户端请求的内容特性完成请求\n");
         }else {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS);
+        }
+    }
+
+    @ApiOperation("根据文章ID，获取文章")
+    @GetMapping(value = {"/getArticleById","/{articleId}"})
+    public Result getArticleById(@RequestParam("articleId")Integer articleId){
+        Article article = articleService.getById(articleId);
+
+//        List<Article> articleList = articleService.getArticleById(articleId);
+
+        if (article == null){
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        }else {
+            return Result.success()
+                    .codeAndMessage(ResultInfo.SUCCESS)
+                    .data("article",article);
+        }
+    }
+
+    @ApiOperation("展示首页文章，参数为当前页，一页文章数定为10")
+    @GetMapping("/homePageArticles")
+    public Result homePageArticles(@RequestParam("currentPageNumber")Integer currentPageNumber){
+        List<ArticleDTO> articleDTOS = articleService.homePageArticles(currentPageNumber);
+        if(articleDTOS.isEmpty()){
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        }else {
+            return Result.success()
+                    .codeAndMessage(ResultInfo.SUCCESS)
+                    .data("articleList",articleDTOS);
+        }
+    }
+
+    @ApiOperation("点击封面进入文章，前端根据文章id查询文章")
+    @GetMapping("/articleList/{articleId}")
+    public Result getArticleAndTagsByArticleId(@PathVariable("articleId")Integer articleId){
+        Article article = articleService.getById(articleId);
+        if(article == null){
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        }else {
+            return Result.success()
+                    .codeAndMessage(ResultInfo.SUCCESS)
+                    .data("article",article)
+                    .data("tagList",tagService.getTagListByArticleId(articleId));
         }
     }
 }

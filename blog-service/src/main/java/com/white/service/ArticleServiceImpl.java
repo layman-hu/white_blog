@@ -2,6 +2,7 @@ package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.white.api.ArticleService;
+import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.mapper.ArticleMapper;
@@ -29,7 +30,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //得到前端传递过来的数据
         //新增或更新文章
         Integer id = addArticleVO.getId();
-        Article article = new Article(addArticleVO);
+
+        Article article = new Article();
+                article.setId(addArticleVO.getId());
+                article.setTitle(addArticleVO.getTitle());
+                article.setPicture(addArticleVO.getPicture());
+                article.setCategoryId(addArticleVO.getCategoryId());
+                article.setContent(addArticleVO.getContent());
+                article.setTop(addArticleVO.isTop());
+                article.setDraft(addArticleVO.isDraft());
+
         Date date = new Date();
         if(null==id){
             //表示新增文章
@@ -66,4 +76,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public Integer deleteArticleById(Integer articleId) {
         return this.baseMapper.deleteArticleById(articleId);
     }
+
+    @Override
+    public List<ArticleDTO> homePageArticles(Integer currentPageNumber) {
+        //初识查询点为0
+        Integer sqlQueryNumber = (currentPageNumber-1)*10;
+
+        return this.baseMapper.homePageArticles(sqlQueryNumber);
+    }
+
+//    @Override
+//    public List<Article> getArticleById(Integer articleId) {
+//        return this.baseMapper.getArticleById(articleId);
+//    }
 }

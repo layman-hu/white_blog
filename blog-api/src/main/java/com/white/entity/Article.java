@@ -65,13 +65,13 @@ public class Article implements Serializable {
     @TableField("IS_DRAFT")
     private boolean isDraft;
 
-    public Article(AddArticleVO addArticleVO) {
-        this.id = addArticleVO.getId();
-        this.title = addArticleVO.getTitle();
-        this.picture = addArticleVO.getPicture();
-        this.categoryId = addArticleVO.getCategoryId();
-        this.content = addArticleVO.getContent();
-        this.isTop = addArticleVO.isTop();
-        this.isDraft = addArticleVO.isDraft();
-    }
+//    public Article(AddArticleVO addArticleVO) {
+//        this.id = addArticleVO.getId();
+//        this.title = addArticleVO.getTitle();
+//        this.picture = addArticleVO.getPicture();
+//        this.categoryId = addArticleVO.getCategoryId();
+//        this.content = addArticleVO.getContent();
+//        this.isTop = addArticleVO.isTop();
+//        this.isDraft = addArticleVO.isDraft();
+//    }
 }

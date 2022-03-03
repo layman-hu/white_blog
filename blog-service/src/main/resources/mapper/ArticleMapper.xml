@@ -50,6 +50,8 @@
         </if>
         limit #{sqlQueryNumber},#{pageSize}
     </select>
+
+
     <!--上述代码存在bug，sqlQueryNumber=pageSize=2时，会报错
     <resultMap id="ArticleListPageMap" type="com.white.dto.ArticleListDTO">
         <result column="ID" property="articleId"></result>
@@ -68,5 +70,59 @@
         c.ID = d.TAG_ID
 
     -->
+    <resultMap id="homePageArticlesMap" type="com.white.dto.ArticleDTO">
+        <!--column数据表的列名或者标签别名  property需要映射到JavaBean 的属性名称-->
+        <result column="articleId" property="articleId"></result>
+        <result column="articleTitle" property="articleTitle"></result>
+        <result column="picture" property="picture"></result>
+        <result column="content" property="content"></result>
+
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <result column="isTop" property="isTop" javaType="boolean"></result>
+        <association property="category" javaType="com.white.entity.Category">
+            <result column="categoryId" property="id"></result>
+            <result column="category" property="category"></result>
+        </association>
+        <collection property="tagList" ofType="com.white.entity.Tag">
+            <result column="tagId" property="id"></result>
+            <result column="TAG_NAME" property="tagName"></result>
+        </collection>
+    </resultMap>
+    <select id="homePageArticles" resultMap="homePageArticlesMap">
+        select
+        a.ID as articleId,
+        a.TITLE as articleTitle,
+        a.PICTURE as picture,
+        a.CONTENT as content,
+        c.ID as categoryId,
+        c.CATEGORY as category,
+        a.CREATE_TIME as createTime,
+        a.UPDATE_TIME as updateTime,
+        a.IS_TOP as isTop,
+        b.ID as tagId,
+        b.`TAG_NAME`
+        from tb_article a,tb_tag b, tb_category c, con_article_tag d
+        where a.CATEGORY_ID = c.ID and
+        b.ID = d.TAG_ID and
+        a.ID = d.ARTICLE_ID
+        order by a.UPDATE_TIME desc
+        limit #{sqlQueryNumber},10
+    </select>
+
+<!--    <select id="getArticleById" resultType="com.white.entity.Article">-->
+<!--        select-->
+<!--        a.ID,-->
+<!--        a.TITLE,-->
+<!--        a.PICTURE,-->
+<!--        a.CATEGORY_ID,-->
+<!--        a.CONTENT,-->
+<!--        a.CREATE_TIME,-->
+<!--        a.UPDATE_TIME,-->
+<!--        a.IS_TOP,-->
+<!--        a.IS_DRAFT-->
+<!--        from tb_article a-->
+<!--        where a.ID = #{articleId}-->
+<!--    </select>-->
 
 </mapper>

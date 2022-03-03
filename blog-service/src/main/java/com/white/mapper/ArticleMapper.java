@@ -1,6 +1,7 @@
 package com.white.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleListDTO> listArticlePage(@Param("sqlQueryNumber")  Integer sqlQueryNumber, @Param("pageSize")  Integer pageSize,@Param("articleTitle")  String articleTitle);
 
     Integer deleteArticleById(@Param("articleId") Integer articleId);
+
+    List<ArticleDTO> homePageArticles(@Param("sqlQueryNumber")  Integer sqlQueryNumber);
+
+//    List<Article> getArticleById(@Param("articleId") Integer articleId);
 }
