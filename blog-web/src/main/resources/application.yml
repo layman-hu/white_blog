@@ -1,6 +1,13 @@
 enable:
   swagger2: true
 
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+
+server:
+  port: 8090
+
+
 spring:
   application:
     name:blog-service
@@ -9,11 +16,41 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/white_blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimeZone=UTC
     username: root
     password: 123456
+    hikari:
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为，默认值：true
+      auto-commit: true
+      # 连接池名称
+      pool-name: MyHikariCP
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间，默认30000，即30秒
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/*.xml
+#redis配置
+redis:
+  host:
+  port:
+  password:
 
-server:
-  port: 8090
+#es配置
+data:
+  elasticsearch:
+    cluster-name:elasticsearch
+    cluster-nodes:
+
+aliyun:
+  url: "oss域名"
+  endpoint: ""
+  accessKeyId: ""
+  accessKeySecret: ""
+  bucketName: ""
+
+
 
 
