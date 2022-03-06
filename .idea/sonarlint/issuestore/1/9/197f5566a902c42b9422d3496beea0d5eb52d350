@@ -1,0 +1,15 @@
+
+N	java:S106"9Replace this use of System.out or System.err by a logger.(±·°ì
+h
+java:S1128"MRemove this unused import 'com.baomidou.mybatisplus.core.toolkit.StringPool'.(±íò«ÿÿÿÿÿ
+j
+java:S1128
+"ORemove this unused import 'com.baomidou.mybatisplus.generator.InjectionConfig'.(½ÄÀ…ÿÿÿÿÿ
+i
+java:S1128"SRemove this unused import 'com.baomidou.mybatisplus.generator.config.po.TableInfo'.(€ÊŞ
+u
+java:S1128"_Remove this unused import 'com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine'.(œ¾±
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
