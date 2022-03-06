@@ -17,6 +17,9 @@ public class MenuDTO {
     private boolean disabled;
     private List<MenuDTO> children = new ArrayList<>();
 
+    public MenuDTO() {
+    }
+
     public MenuDTO isParentMenu(Menu menu) {
         this.id = menu.getId();
         this.menuName = menu.getMenu();

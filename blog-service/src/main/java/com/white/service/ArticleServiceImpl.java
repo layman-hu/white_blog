@@ -1,12 +1,14 @@
 package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.white.LoggerInfo;
 import com.white.api.ArticleService;
 import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.mapper.ArticleMapper;
 import com.white.vo.AddArticleVO;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -43,8 +45,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Date date = new Date();
         if(null==id){
             //表示新增文章
-
             article.setCreateTime(date);
+            article.setUpdateTime(date);
         }else {
             article.setUpdateTime(date);
         }
@@ -56,6 +58,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //在设置关联表
         //获取标签的id
         List<Integer> tagIdList = addArticleVO.getTagIdList();
+        LoggerInfo.initialization()
+                .loggerName("com.white.service.ArticleServiceImpl")
+                .messages("ArticleServiceImpl:")
+//                .messages("addArticleVO.getTagIdList():",addArticleVO.getTagIdList())
+                .messages("tagIdList:",tagIdList)
+                .output();
+
         //获取文章主键id
         Integer articleId = article.getId();
         //新增或者更新关联表

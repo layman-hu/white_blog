@@ -62,7 +62,7 @@ public class ArticleController {
              * 即
              * private List<String> tagList = new ArrayList<>();
              */
-            articleListDTOList.get(i).getTagList().addAll(tagService.getTagListByArticleId(articleId));
+            articleListDTOList.get(i).getTagIdList().addAll(tagService.getTagIdListByArticleId(articleId));
         }
 
         if(!articleListDTOList.isEmpty()){
@@ -126,7 +126,7 @@ public class ArticleController {
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
                     .data("article",article)
-                    .data("tagList",tagService.getTagListByArticleId(articleId));
+                    .data("tagIdList",tagService.getTagIdListByArticleId(articleId));
         }
 
     }

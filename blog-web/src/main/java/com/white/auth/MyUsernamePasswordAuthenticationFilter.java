@@ -37,13 +37,13 @@ public class MyUsernamePasswordAuthenticationFilter extends UsernamePasswordAuth
                 e.printStackTrace();
             }
             if(map != null){
-                String username = map.get("userName");
+                String username = map.get("username");
                 String password = map.get("password");
 
                 LoggerInfo.initialization()
                         .loggerName("com.white.auth.MyUsernamePasswordAuthenticationFilter")
                         .messages("MyUsernamePasswordAuthenticationFilter:")
-                        .messages("userName:\t"+username)
+                        .messages("username:\t"+username)
                         .messages("password:\t"+password)
                         .output();
 

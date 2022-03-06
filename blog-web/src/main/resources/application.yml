@@ -10,7 +10,7 @@ server:
 
 spring:
   application:
-    name:blog-service
+    name: blog-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/white_blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimeZone=UTC
@@ -32,24 +32,31 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
-#redis配置
-redis:
-  host:
-  port:
-  password:
+#white:
+#  jwt:
+#    # 部署上线务必修改此配置，以保证token的安全性
+#    secret: f4e2e52034348f86b67cde581c0f9eb5
+#    expire: 172800
+#    header: token
 
-#es配置
-data:
-  elasticsearch:
-    cluster-name:elasticsearch
-    cluster-nodes:
+##redis配置
+#redis:
+#  host:
+#  port:
+#  password:
 
-aliyun:
-  url: "oss域名"
-  endpoint: ""
-  accessKeyId: ""
-  accessKeySecret: ""
-  bucketName: ""
+##es配置
+#data:
+#  elasticsearch:
+#    cluster-name:elasticsearch
+#    cluster-nodes:
+
+#aliyun:
+#  url: "oss域名"
+#  endpoint: ""
+#  accessKeyId: ""
+#  accessKeySecret: ""
+#  bucketName: ""
 
 
 

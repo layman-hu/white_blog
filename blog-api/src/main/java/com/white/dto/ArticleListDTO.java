@@ -18,11 +18,11 @@ public class ArticleListDTO implements Serializable {
 
     private Integer articleId;
     private String articleTitle;
-    private String category;
+    private Integer categoryId;
 
     private Date createTime;
     private Date updateTime;
     private Boolean isTop;
 
-    private List<String> tagList = new ArrayList<>();
+    private List<Integer> tagIdList = new ArrayList<>();
 }

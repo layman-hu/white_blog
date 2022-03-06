@@ -25,12 +25,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<Menu> getAllMenuListByUserRole(String roleName) {
-        //后台管理菜单，最多两级
-        LoggerInfo.initialization()
-                .loggerName("com.white.service.MenuServiceImpl")
-                .messages("MenuServiceImpl:")
-                .messages("后台管理菜单，递归查询")
-                .output();
 
         //虚拟一个顶级父类菜单
         Menu menuParent = new Menu();
@@ -44,7 +38,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             LoggerInfo.initialization()
                     .loggerName("com.white.service.MenuServiceImpl")
                     .messages("MenuServiceImpl:")
-//                    .messages("menuList",menuList)
+                    .messages("后台管理菜单，递归查询")
+                    .messages("menuList",menuList)
                     .output();
 
             //未访问标false，访问标true

@@ -22,7 +22,7 @@ import java.util.List;
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
 
     @Override
-    public List<String> getTagListByArticleId(Integer articleId) {
-        return this.baseMapper.getTagListByArticleId(articleId);
+    public List<Integer> getTagIdListByArticleId(Integer articleId) {
+        return this.baseMapper.getTagIdListByArticleId(articleId);
     }
 }

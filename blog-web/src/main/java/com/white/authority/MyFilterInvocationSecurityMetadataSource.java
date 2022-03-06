@@ -30,7 +30,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         //在白名单里面的请求直接返回null，即白名单内的请求不需要权限
 
         //数据库里面查到的需要拦截的路径
-        boolean b1 = matcher.match("/**",uri);
+        boolean b1 = matcher.match("/admin",uri);
 
         //数据里面查出来的当前路径对应的方法
 //        boolean b2 = method.toUpperCase().equals("数据里面查出来的当前路径对应的方法");

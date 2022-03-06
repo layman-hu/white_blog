@@ -28,7 +28,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 //        wrapper.eq("userName",username);
-        wrapper.eq("USER_NAME",username);
+        wrapper.eq("USERNAME",username);
         User user = userService.getOne(wrapper);
 
 
@@ -55,7 +55,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         MyUserDetails userDetails = new MyUserDetails();
         userDetails.setUser(user);
-        userDetails.setUsername(user.getUserName());
+        userDetails.setUsername(user.getUsername());
         //{noop}未加密
         userDetails.setPassword("{noop}" + user.getPassword());
 

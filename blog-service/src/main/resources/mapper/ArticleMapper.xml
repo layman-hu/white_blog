@@ -37,7 +37,7 @@
         select
         a.ID as articleId,
         a.TITLE as articleTitle,
-        b.CATEGORY as category,
+        b.ID as categoryId,
         a.CREATE_TIME as createTime,
         a.UPDATE_TIME as updateTime,
         a.IS_TOP as isTop

@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class LoggerInfo {
     //设置记录器名称
     private String loggerName;
@@ -32,10 +29,9 @@ public class LoggerInfo {
         return this;
     }
 
-    public LoggerInfo messages(String msgName,Object msg) throws JsonProcessingException {
+    public LoggerInfo messages(String msgName,Object msg) {
         this.getMessages().add(msgName+":\t");
-        this.getMessages().add(new ObjectMapper().writeValueAsString(msg));
-//        this.getMessages().add(msg.toString());
+        this.getMessages().add(msg.toString());
         return this;
     }
 

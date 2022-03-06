@@ -32,9 +32,9 @@ public class UserController {
 
 
     @GetMapping("getUserRolesByUserId")
-    public Result getUserRolesByUserId(Integer id) throws JsonProcessingException {
+    public Result getUserRolesByUserId(Integer id) {
         List<String> roleList = userService.getUserRolesByUserId(id);
-        if(roleList.size()>0){
+        if(!roleList.isEmpty()){
             LoggerInfo.initialization()
                     .loggerName("com.white.controller.UserController")
                     .messages("UserController:")
@@ -49,9 +49,9 @@ public class UserController {
     }
 
     @GetMapping("/getUserList")
-    public Result getUserList(UserQueryVO userQueryVO) throws JsonProcessingException {
+    public Result getUserList(UserQueryVO userQueryVO) {
         List<UserDTO> userList = userService.getUserByCondition(userQueryVO);
-        if(userList.size()>0){
+        if(!userList.isEmpty()){
             int total = userList.size();
 
             LoggerInfo.initialization()

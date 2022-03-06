@@ -18,5 +18,6 @@ import java.util.List;
 @Mapper
 public interface TagMapper extends BaseMapper<Tag> {
 
-    List<String> getTagListByArticleId(@Param("articleId") Integer articleId);
+
+    List<Integer> getTagIdListByArticleId(@Param("articleId") Integer articleId);
 }

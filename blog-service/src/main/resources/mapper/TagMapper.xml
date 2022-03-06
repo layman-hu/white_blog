@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.white.mapper.TagMapper">
 
-    <select id="getTagListByArticleId" resultType="java.lang.String">
+    <select id="getTagIdListByArticleId" resultType="java.lang.Integer">
         select
-        a.TAG_NAME
+        a.ID
         from tb_tag a, con_article_tag b
         where
         #{articleId} = b.ARTICLE_ID and

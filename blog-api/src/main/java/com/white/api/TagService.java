@@ -3,6 +3,7 @@ package com.white.api;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.white.entity.Tag;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,5 +20,5 @@ public interface TagService extends IService<Tag> {
      * @param articleId
      * @return
      */
-    List<String> getTagListByArticleId(Integer articleId);
+    List<Integer> getTagIdListByArticleId(Integer articleId);
 }
