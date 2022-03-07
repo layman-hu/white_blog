@@ -7,11 +7,18 @@
             select count(*) from con_article_tag where ARTICLE_ID=#{articleId}
         </selectKey>
         <if test="count>0">
-            <foreach collection="tagIdList" separator="," item="item">
-                update
-                con_article_tag a
-                set a.TGA_ID=#{item}
-                where a.ARTICLE_ID=#{articleId}
+            <foreach collection="tagIdList" separator=";" item="item">
+                insert into con_article_tag ( ARTICLE_ID, TAG_ID )
+                select #{articleId},#{item}
+                from dual
+                where
+                not exists (
+                    select *
+                    from con_article_tag a
+                    where
+                        a.ARTICLE_ID = #{articleId} and
+                        a.TAG_ID = #{item}
+                )
             </foreach>
         </if>
         <if test="count==0">
@@ -23,6 +30,7 @@
             </foreach>
         </if>
     </insert>
+
 
 
     <delete id="deleteArticleById">
@@ -110,7 +118,32 @@
         limit #{sqlQueryNumber},10
     </select>
 
-<!--    <select id="getArticleById" resultType="com.white.entity.Article">-->
+    <select id="isExistArticleId" resultType="java.lang.Integer">
+        select
+        count(a.ARTICLE_ID)
+        from con_article_tag a
+        where a.ARTICLE_ID=#{articleId}
+    </select>
+
+    <insert id="updateConArticleTag">
+        insert ignore into
+        con_article_tag(ARTICLE_ID,TAG_ID)
+        values
+        <foreach collection="tagIdList" separator="," item="item">
+            (#{articleId},#{item})
+        </foreach>
+    </insert>
+    <insert id="insertConArticleTag">
+        insert
+        con_article_tag(ARTICLE_ID,TAG_ID)
+        values
+        <foreach collection="tagIdList" separator=";" item="item">
+            (#{articleId},#{item})
+        </foreach>
+    </insert>
+
+
+    <!--    <select id="getArticleById" resultType="com.white.entity.Article">-->
 <!--        select-->
 <!--        a.ID,-->
 <!--        a.TITLE,-->

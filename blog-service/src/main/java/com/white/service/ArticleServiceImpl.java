@@ -53,7 +53,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //保存或更新文章
         boolean saveOrUpdateFlag = this.saveOrUpdate(article);
         if (!saveOrUpdateFlag){
-            return -1;
+            //保存或更新文章失败
+            return -2;
         }
         //在设置关联表
         //获取标签的id
@@ -68,10 +69,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //获取文章主键id
         Integer articleId = article.getId();
         //新增或者更新关联表
-        int i = this.baseMapper.saveOrUpdateConArticleTag(articleId,tagIdList);
-        if (i<0){
-            return -1;
+        //判断con_article_tag中，是否存在articleId
+        int count = this.baseMapper.isExistArticleId(articleId);
+
+        //关联表更新失败
+        int i = -1;
+        if(count > 0){
+            //关联表中存在articleId，更新关联表
+            i = this.baseMapper.updateConArticleTag(articleId,tagIdList);
+        }else if(count == 0){
+            i = this.baseMapper.insertConArticleTag(articleId,tagIdList);
         }
+
         return i;
     }
 

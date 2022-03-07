@@ -28,5 +28,11 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     List<ArticleDTO> homePageArticles(@Param("sqlQueryNumber")  Integer sqlQueryNumber);
 
+    Integer isExistArticleId(@Param("articleId") Integer articleId);
+
+    Integer updateConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList")  List<Integer> tagIdList);
+
+    Integer insertConArticleTag(Integer articleId, List<Integer> tagIdList);
+
 //    List<Article> getArticleById(@Param("articleId") Integer articleId);
 }

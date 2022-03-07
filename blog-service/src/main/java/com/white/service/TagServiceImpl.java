@@ -25,4 +25,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     public List<Integer> getTagIdListByArticleId(Integer articleId) {
         return this.baseMapper.getTagIdListByArticleId(articleId);
     }
+
+    @Override
+    public List<Tag> getTagListByArticleId(Integer articleId) {
+        return this.baseMapper.getTagListByArticleId(articleId);
+    }
 }

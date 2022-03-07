@@ -10,4 +10,14 @@
         #{articleId} = b.ARTICLE_ID and
         a.ID = b.TAG_ID
     </select>
+
+    <select id="getTagListByArticleId" resultType="com.white.entity.Tag">
+        select
+        a.ID,
+        a.TAG_NAME
+        from tb_tag a, con_article_tag b
+        where
+        #{articleId} = b.ARTICLE_ID and
+        a.ID = b.TAG_ID
+    </select>
 </mapper>

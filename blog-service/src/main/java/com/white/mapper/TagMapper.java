@@ -20,4 +20,6 @@ public interface TagMapper extends BaseMapper<Tag> {
 
 
     List<Integer> getTagIdListByArticleId(@Param("articleId") Integer articleId);
+
+    List<Tag> getTagListByArticleId(@Param("articleId") Integer articleId);
 }

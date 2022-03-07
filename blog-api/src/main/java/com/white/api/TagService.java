@@ -16,9 +16,16 @@ import java.util.List;
  */
 public interface TagService extends IService<Tag> {
     /**
-     * 通过文章id查询标签列表
+     * 通过文章id查询标签id列表
      * @param articleId
      * @return
      */
     List<Integer> getTagIdListByArticleId(Integer articleId);
+
+    /**
+     * 通过文章id查询标签列表
+     * @param articleId
+     * @return
+     */
+    List<Tag> getTagListByArticleId(Integer articleId);
 }

@@ -4,15 +4,19 @@ package com.white.controller;
 import com.white.Result;
 import com.white.ResultInfo;
 import com.white.api.ArticleService;
+import com.white.api.CategoryService;
 import com.white.api.TagService;
 import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
+import com.white.entity.Category;
+import com.white.entity.Tag;
 import com.white.vo.AddArticleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -30,14 +34,18 @@ public class ArticleController {
     private ArticleService articleService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private CategoryService categoryService;
 
     @ApiOperation("上传或更新文章")
     @PostMapping("/saveOrUpdateArticle")
     public Result saveOrUpdateArticle(@RequestBody AddArticleVO addArticleVO){
 
         int i = articleService.saveOrUpdateArticle(addArticleVO);
-        if (i == -1){
-            return Result.error().codeAndMessage("406","服务器无法根据客户端请求的内容特性完成请求\n");
+        if(i == -2){
+            return Result.error().codeAndMessage("406","保存或更新文章失败\n");
+        }else if (i == -1){
+            return Result.error().codeAndMessage("406","文章标签关联表更新失败\n");
         }else {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS);
         }
@@ -50,9 +58,21 @@ public class ArticleController {
             @RequestParam(value = "pageSize", defaultValue = "7", required = true)Integer pageSize,
             @RequestParam(value = "queryTitleKeyword",required = false)String queryTitleKeyword){
 
+        //该数值用于前端列表分页展示
         int articleListSize = articleService.count();
+
         List<ArticleListDTO> articleListDTOList = articleService.listArticlePage(currentPageNumber, pageSize, queryTitleKeyword);
 
+        //查询关键字不为空
+        if (!queryTitleKeyword.equals("")){
+            //通过关键字查询后，列表不为空
+            if(!articleListDTOList.isEmpty()){
+                articleListSize = articleListDTOList.size();
+            }else {
+                //通过关键字查询后，列表为空
+                articleListSize = 1;
+            }
+        }
         //查询文章id对应的标签列表，并将其加入articleListDTOList内
         for(int i=0; i<articleListDTOList.size(); i++){
             Integer articleId = articleListDTOList.get(i).getArticleId();
@@ -95,11 +115,25 @@ public class ArticleController {
 //        List<Article> articleList = articleService.getArticleById(articleId);
 
         if (article == null){
-            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND)
+                    .codeAndMessage("404","文章不存在");
         }else {
+            ArticleDTO articleDTO = new ArticleDTO();
+                articleDTO.setArticleId(articleId);
+                articleDTO.setArticleTitle(article.getTitle());
+                articleDTO.setPicture(article.getPicture());
+                articleDTO.setContent(article.getContent());
+                articleDTO.setCategory(categoryService.getById(article.getCategoryId()));
+                articleDTO.setCreateTime(article.getCreateTime());
+                articleDTO.setUpdateTime(article.getUpdateTime());
+                articleDTO.setIsTop(article.isTop());
+                //标签没找到则为空
+                articleDTO.setTagList(tagService.getTagListByArticleId(articleId));
+
+
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("article",article);
+                    .data("articleDTO",articleDTO);
         }
     }
 

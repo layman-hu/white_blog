@@ -23,3 +23,28 @@ enable:
 
  Lombok包会在编译阶段会修改底层代码，而且会将对象的私有属性进行一个类似于public的声明，敏感信息不建议导入Lombok包
  比如涉及用户密码的User类，涉及权限验证的JWT类
+
+ 打好mysql基础
+
+
+     <insert id="saveOrUpdateConArticleTag" useGeneratedKeys="true">
+         <selectKey keyProperty="count" resultType="int" order="BEFORE">
+             select count(*) from con_article_tag where ARTICLE_ID=#{articleId}
+         </selectKey>
+         <if test="count>0">
+             <foreach collection="tagIdList" separator=";" item="item">
+                 update
+                 con_article_tag a
+                 set a.TAG_ID=#{item}
+                 where a.ARTICLE_ID=#{articleId}
+             </foreach>
+         </if>
+         <if test="count==0">
+             insert
+             con_article_tag(ARTICLE_ID,TAG_ID)
+             values
+             <foreach collection="tagIdList" separator="," item="item">
+                 (#{articleId},#{item})
+             </foreach>
+         </if>
+     </insert>

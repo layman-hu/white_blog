@@ -52,20 +52,20 @@ public class UserController {
     public Result getUserList(UserQueryVO userQueryVO) {
         List<UserDTO> userList = userService.getUserByCondition(userQueryVO);
         if(!userList.isEmpty()){
-            int total = userList.size();
+            int userListSize = userList.size();
 
             LoggerInfo.initialization()
                     .loggerName("com.white.controller.UserController")
                     .messages("UserController:")
                     .messages("userList",userList)
-                    .messages("total",total)
+                    .messages("userListSize",userListSize)
                     .output();
 
 
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
                     .data("userList",userList)
-                    .data("total",total);
+                    .data("userListSize",userListSize);
         }
         else {
             LoggerInfo.initialization()
