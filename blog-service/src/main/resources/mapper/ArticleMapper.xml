@@ -137,7 +137,7 @@
         insert
         con_article_tag(ARTICLE_ID,TAG_ID)
         values
-        <foreach collection="tagIdList" separator=";" item="item">
+        <foreach collection="tagIdList" separator="," item="item">
             (#{articleId},#{item})
         </foreach>
     </insert>

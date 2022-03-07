@@ -30,9 +30,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Integer isExistArticleId(@Param("articleId") Integer articleId);
 
-    Integer updateConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList")  List<Integer> tagIdList);
+    Integer updateConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList") List<Integer> tagIdList);
 
-    Integer insertConArticleTag(Integer articleId, List<Integer> tagIdList);
+    Integer insertConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList") List<Integer> tagIdList);
 
 //    List<Article> getArticleById(@Param("articleId") Integer articleId);
 }

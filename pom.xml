@@ -25,10 +25,18 @@
 
 
         <mybatisplus.version>3.4.0</mybatisplus.version>
-        <springboot.version>2.4.1</springboot.version>
-        <springfox.version>2.9.2</springfox.version>
+
+<!--        <springboot.version>2.4.1</springboot.version>-->
+        <springboot.version>2.6.3</springboot.version>
+
+        <springjdbc.version>2.6.3</springjdbc.version>
+        <springautoconfigure.version>2.6.3</springautoconfigure.version>
+        <springsecurity.version>2.6.3</springsecurity.version>
+        <springweb.version>2.6.3</springweb.version>
+
+        <springfox.version>2.10.0</springfox.version>
         <mysql.version>8.0.27</mysql.version>
-        <lombok.version>1.18.14</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -55,22 +63,22 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springweb.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springjdbc.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-security</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springsecurity.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-autoconfigure</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springautoconfigure.version}</version>
             </dependency>
 
 
