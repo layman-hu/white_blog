@@ -1,14 +1,12 @@
 package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.white.LoggerInfo;
+import com.white.domain.LoggerInfo;
 import com.white.api.ArticleService;
-import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.mapper.ArticleMapper;
 import com.white.vo.AddArticleVO;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -96,11 +94,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleDTO> homePageArticles(Integer currentPageNumber) {
+    public List<Article> homePageArticles(Integer currentPageNumber, Integer pageSize) {
         //初识查询点为0
-        Integer sqlQueryNumber = (currentPageNumber-1)*10;
+        Integer sqlQueryNumber = (currentPageNumber-1)*pageSize;
 
-        return this.baseMapper.homePageArticles(sqlQueryNumber);
+        return this.baseMapper.homePageArticles(sqlQueryNumber,pageSize);
+    }
+
+    @Override
+    public List<Article> getArticlesByCategory(Integer currentPageNumber, Integer pageSize, String categoryName) {
+        //初识查询点为0
+        Integer sqlQueryNumber = (currentPageNumber-1)*pageSize;
+
+        return this.baseMapper.getArticlesByCategory(sqlQueryNumber,pageSize,categoryName);
     }
 
 //    @Override

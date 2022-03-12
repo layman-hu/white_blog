@@ -1,4 +1,4 @@
-package com.white;
+package com.white.domain;
 
 public enum ResultInfo {
     LOGIN_SUCCESS("201","登陆成功"),

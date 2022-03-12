@@ -1,15 +1,13 @@
 package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.white.LoggerInfo;
+import com.white.domain.LoggerInfo;
 import com.white.api.MenuService;
 import com.white.entity.Menu;
 import com.white.mapper.MenuMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**

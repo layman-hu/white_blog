@@ -1,7 +1,7 @@
 package com.white.handler.exception;
 
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

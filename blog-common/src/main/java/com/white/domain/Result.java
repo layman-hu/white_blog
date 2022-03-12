@@ -1,4 +1,4 @@
-package com.white;
+package com.white.domain;
 
 import java.util.HashMap;
 import java.util.Map;

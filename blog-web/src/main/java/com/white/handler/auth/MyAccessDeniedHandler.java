@@ -1,7 +1,7 @@
 package com.white.handler.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.white.Result;
+import com.white.domain.Result;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

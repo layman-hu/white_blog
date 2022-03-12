@@ -1,16 +1,11 @@
 package com.white.controller;
 
 
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.api.MenuService;
-import com.white.dto.MenuDTO;
 import com.white.entity.Menu;
-import com.white.entity.Role;
-import com.white.mapper.MenuMapper;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

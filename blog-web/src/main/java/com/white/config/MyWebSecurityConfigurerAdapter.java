@@ -1,6 +1,6 @@
 package com.white.config;
 
-import com.white.LoggerInfo;
+import com.white.domain.LoggerInfo;
 import com.white.handler.auth.MyAccessDeniedHandler;
 import com.white.auth.MyUserDetailsService;
 import com.white.auth.MyUsernamePasswordAuthenticationFilter;
@@ -12,6 +12,7 @@ import com.white.handler.auth.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -96,5 +97,11 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(myUserDetailsService);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

@@ -38,6 +38,11 @@ spring:
 #    secret: f4e2e52034348f86b67cde581c0f9eb5
 #    expire: 172800
 #    header: token
+white:
+  token:
+    secretKey: aw5rg16se5r4h8s6er1h6seh84
+    validTime: 3*60*1000
+    header: token
 
 ##redis配置
 #redis:

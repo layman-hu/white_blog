@@ -2,7 +2,7 @@ package com.white.auth;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.white.LoggerInfo;
+import com.white.domain.LoggerInfo;
 import com.white.api.UserService;
 import com.white.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {

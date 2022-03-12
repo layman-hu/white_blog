@@ -1,8 +1,8 @@
 package com.white.controller;
 
 
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.api.CategoryService;
 import com.white.entity.Category;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +29,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ApiOperation("获取分类列表")
-    @GetMapping("getCategoryList")
+    @GetMapping("/getCategoryList")
     public Result getCategoryList(){
         List<Category> categoryList = categoryService.list();
         if(!categoryList.isEmpty()){
@@ -41,5 +41,7 @@ public class CategoryController {
         }
 
     }
+
+
 }
 

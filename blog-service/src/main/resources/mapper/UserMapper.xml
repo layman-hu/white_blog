@@ -9,6 +9,7 @@
     </select>
     <select id="getUserByCondition" resultType="com.white.dto.UserDTO">
         select
+        a.ID,
         a.AVATAR,
         a.NICK_NAME,
         a.CREATE_TIME,

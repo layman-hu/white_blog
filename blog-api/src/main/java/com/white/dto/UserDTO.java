@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class UserDTO {
 
-    @ApiModelProperty(value = "文章ID")
+    @ApiModelProperty(value = "用户ID")
 //    @TableId(value = "ID")
     private Integer id;
 

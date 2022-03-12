@@ -1,8 +1,8 @@
 package com.white.handler.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;

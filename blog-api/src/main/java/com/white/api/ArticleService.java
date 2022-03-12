@@ -40,7 +40,9 @@ public interface ArticleService extends IService<Article> {
      */
     Integer deleteArticleById(Integer articleId);
 
-    List<ArticleDTO> homePageArticles(Integer currentPageNumber);
+    List<Article> homePageArticles(Integer currentPageNumber,Integer pageSize);
+
+    List<Article> getArticlesByCategory(Integer currentPageNumber, Integer pageSize, String categoryName);
 
 //    /**
 //     * 根据文章ID，获取文章

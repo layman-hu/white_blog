@@ -1,8 +1,7 @@
 package com.white.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.white.LoggerInfo;
+import com.white.domain.LoggerInfo;
 import com.white.api.UserService;
 import com.white.dto.UserDTO;
 import com.white.entity.User;

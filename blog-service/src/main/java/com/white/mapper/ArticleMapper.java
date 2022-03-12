@@ -26,13 +26,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     Integer deleteArticleById(@Param("articleId") Integer articleId);
 
-    List<ArticleDTO> homePageArticles(@Param("sqlQueryNumber")  Integer sqlQueryNumber);
+    List<Article> homePageArticles(@Param("sqlQueryNumber")  Integer sqlQueryNumber, @Param("pageSize")  Integer pageSize);
 
     Integer isExistArticleId(@Param("articleId") Integer articleId);
 
     Integer updateConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList") List<Integer> tagIdList);
 
     Integer insertConArticleTag(@Param("articleId") Integer articleId, @Param("tagIdList") List<Integer> tagIdList);
+
+    List<Article> getArticlesByCategory(@Param("sqlQueryNumber")  Integer sqlQueryNumber, @Param("pageSize")   Integer pageSize, @Param("categoryName")   String categoryName);
 
 //    List<Article> getArticleById(@Param("articleId") Integer articleId);
 }

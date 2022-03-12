@@ -1,4 +1,4 @@
-package com.white;
+package com.white.domain;
 
 import java.util.ArrayList;
 import java.util.List;

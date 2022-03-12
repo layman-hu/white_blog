@@ -1,8 +1,9 @@
 package com.white.controller;
 
 
-import com.white.Result;
-import com.white.ResultInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.api.ArticleService;
 import com.white.api.CategoryService;
 import com.white.api.TagService;
@@ -10,13 +11,12 @@ import com.white.dto.ArticleDTO;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
 import com.white.entity.Category;
-import com.white.entity.Tag;
 import com.white.vo.AddArticleVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -133,20 +133,106 @@ public class ArticleController {
 
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("articleDTO",articleDTO);
+                    .data("article",articleDTO);
         }
     }
 
-    @ApiOperation("展示首页文章，参数为当前页，一页文章数定为10")
+    @ApiOperation("展示首页文章，参数为当前页，一页文章数定为5")
     @GetMapping("/homePageArticles")
-    public Result homePageArticles(@RequestParam("currentPageNumber")Integer currentPageNumber){
-        List<ArticleDTO> articleDTOS = articleService.homePageArticles(currentPageNumber);
-        if(articleDTOS.isEmpty()){
+    public Result homePageArticles(@RequestParam("currentPageNumber")Integer currentPageNumber, @RequestParam("pageSize")Integer pageSize){
+        List<Article> articleList = articleService.homePageArticles(currentPageNumber,pageSize);
+        Integer allArticleNumber = articleService.count();
+
+        if(articleList.isEmpty()){
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        }else {
+            List<ArticleDTO> articleDTOS = new ArrayList<>();
+            for(Article article:articleList){
+                Integer articleId = article.getId();
+
+                ArticleDTO temp = new ArticleDTO();
+                temp.setArticleId(articleId);
+                temp.setArticleTitle(article.getTitle());
+                temp.setPicture(article.getPicture());
+                temp.setContent(article.getContent());
+                temp.setCategory(categoryService.getById(article.getCategoryId()));
+                temp.setCreateTime(article.getCreateTime());
+                temp.setUpdateTime(article.getUpdateTime());
+                temp.setIsTop(article.isTop());
+                temp.setTagList(tagService.getTagListByArticleId(articleId));
+
+                articleDTOS.add(temp);
+            }
+
+            return Result.success()
+                    .codeAndMessage(ResultInfo.SUCCESS)
+                    .data("articleList",articleDTOS)
+                    .data("currentPageNumber",currentPageNumber)
+                    .data("total",allArticleNumber);
+
+        }
+    }
+
+    @ApiOperation("根据分类名搜索文章，参数为当前页，一页文章数定为5")
+    @GetMapping("/getArticlesByCategory")
+    public Result getArticlesByCategory(@RequestParam(value = "currentPageNumber", defaultValue = "1",required = true)Integer currentPageNumber,
+                                        @RequestParam(value = "pageSize", defaultValue = "5", required = true)Integer pageSize,
+                                        @RequestParam(value = "categoryName",required = true)String categoryName){
+        List<Article> articleList = articleService.getArticlesByCategory(currentPageNumber,pageSize,categoryName);
+
+        Category category = categoryService.getOne( new QueryWrapper<Category>().eq("CATEGORY",categoryName));
+        System.out.println("category");
+        System.out.println(category);
+
+        QueryWrapper<Article> queryWrapper = new QueryWrapper();
+        Integer allArticleNumber = articleService.count(queryWrapper.eq("CATEGORY_ID",category.getId()));
+        System.out.println("allArticleNumber");
+        System.out.println(allArticleNumber);
+
+
+        if(articleList.isEmpty()){
+            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
+        }else {
+            List<ArticleDTO> articleDTOS = new ArrayList<>();
+            for(Article article:articleList){
+                Integer articleId = article.getId();
+
+                ArticleDTO temp = new ArticleDTO();
+                temp.setArticleId(articleId);
+                temp.setArticleTitle(article.getTitle());
+                temp.setPicture(article.getPicture());
+                temp.setContent(article.getContent());
+                temp.setCategory(category);
+                temp.setCreateTime(article.getCreateTime());
+                temp.setUpdateTime(article.getUpdateTime());
+                temp.setIsTop(article.isTop());
+                temp.setTagList(tagService.getTagListByArticleId(articleId));
+
+                articleDTOS.add(temp);
+            }
+
+            return Result.success()
+                    .codeAndMessage(ResultInfo.SUCCESS)
+                    .data("articleList",articleDTOS)
+                    .data("currentPageNumber",currentPageNumber)
+                    .data("total",allArticleNumber);
+
+        }
+    }
+
+    @ApiOperation("按最新创建时间查询文章列表，参数为当前页，一页文章数定为10")
+    @GetMapping("/archives")
+    public Result archives(@RequestParam(value = "currentPageNumber", defaultValue = "1",required = true)Integer currentPageNumber,
+                           @RequestParam(value = "pageSize", defaultValue = "10", required = true)Integer pageSize){
+        List<Article> articleList = articleService.list(new QueryWrapper<Article>().orderByDesc("CREATE_TIME"));
+        Integer allArticleNumber = articleService.count();
+        if(articleList.isEmpty()){
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
         }else {
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("articleList",articleDTOS);
+                    .data("articleList",articleList)
+                    .data("total",allArticleNumber);
         }
     }
 

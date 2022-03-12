@@ -1,6 +1,6 @@
 //package com.white.authority;
 //
-//import com.white.ResultInfo;
+//import com.white.domain.ResultInfo;
 //import com.white.handler.exception.MyRuntimeException;
 //import org.springframework.security.access.AccessDeniedException;
 //

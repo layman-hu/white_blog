@@ -2,9 +2,9 @@ package com.white.handler.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.white.LoggerInfo;
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.LoggerInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.auth.MyUserDetails;
 import com.white.entity.User;
 import org.springframework.security.core.Authentication;
@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {

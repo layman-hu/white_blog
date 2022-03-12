@@ -1,6 +1,6 @@
 package com.white.handler.exception;
 
-import com.white.ResultInfo;
+import com.white.domain.ResultInfo;
 
 public class MyRuntimeException extends RuntimeException{
     private String code;

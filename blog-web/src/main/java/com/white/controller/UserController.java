@@ -1,10 +1,9 @@
 package com.white.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.white.LoggerInfo;
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.LoggerInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.api.UserService;
 import com.white.dto.UserDTO;
 import com.white.vo.UserQueryVO;
@@ -31,7 +30,7 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("getUserRolesByUserId")
+    @GetMapping("/getUserRolesByUserId")
     public Result getUserRolesByUserId(Integer id) {
         List<String> roleList = userService.getUserRolesByUserId(id);
         if(!roleList.isEmpty()){

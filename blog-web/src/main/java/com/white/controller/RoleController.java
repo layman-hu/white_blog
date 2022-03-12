@@ -1,8 +1,8 @@
 package com.white.controller;
 
 
-import com.white.Result;
-import com.white.ResultInfo;
+import com.white.domain.Result;
+import com.white.domain.ResultInfo;
 import com.white.api.RoleService;
 import com.white.dto.RoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
