@@ -21,4 +21,6 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     List<Menu> getAllMenuListByUserRole(String roleName);
+
+    List<Menu> getMenuListByUserId(String userId);
 }

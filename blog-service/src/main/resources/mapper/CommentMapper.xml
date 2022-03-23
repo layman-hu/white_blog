@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.white.mapper.CommentMapper">
+
+    <select id="getCommentListByArticleId" resultType="com.white.entity.Comment">
+        select *
+        from tb_comment a
+        where a.ARTICLE_ID=#{articleId}
+        order by a.CREATE_TIME desc
+        limit #{sqlQueryNumber},#{pageSize}
+    </select>
+</mapper>

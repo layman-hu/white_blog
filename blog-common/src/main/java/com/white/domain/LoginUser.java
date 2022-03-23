@@ -9,10 +9,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Administrator
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,13 +30,19 @@ public class LoginUser implements UserDetails {
 
     //存储SpringSecurity的权限信息
     //不需要存入redis，不需要序列化
+
     @JSONField(serialize = false)
     private List<SimpleGrantedAuthority> authorities;
+
+    public LoginUser(User user, List<String> list) {
+        this.user = user;
+        this.permissions = list;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        if(!authorities.isEmpty()){
+        if(authorities != null){
             return authorities;
         }
 

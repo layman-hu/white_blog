@@ -1,7 +1,6 @@
 package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.white.domain.LoggerInfo;
 import com.white.api.ArticleService;
 import com.white.dto.ArticleListDTO;
 import com.white.entity.Article;
@@ -23,7 +22,9 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
-    //涉及到增删改查，有事务问题
+    /**
+     * 涉及到增删改查，有事务问题
+     */
     @Override
     public Integer saveOrUpdateArticle(AddArticleVO addArticleVO) {
 
@@ -31,23 +32,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //新增或更新文章
         Integer id = addArticleVO.getId();
 
-        Article article = new Article();
-                article.setId(addArticleVO.getId());
-                article.setTitle(addArticleVO.getTitle());
-                article.setPicture(addArticleVO.getPicture());
-                article.setCategoryId(addArticleVO.getCategoryId());
-                article.setContent(addArticleVO.getContent());
-                article.setTop(addArticleVO.isTop());
-                article.setDraft(addArticleVO.isDraft());
+        Article article =  voToArticle(addArticleVO);
 
         Date date = new Date();
         if(null==id){
-            //表示新增文章
+            //文章id不存在，表示新增文章
             article.setCreateTime(date);
-            article.setUpdateTime(date);
-        }else {
-            article.setUpdateTime(date);
         }
+        article.setUpdateTime(date);
+
         //保存或更新文章
         boolean saveOrUpdateFlag = this.saveOrUpdate(article);
         if (!saveOrUpdateFlag){
@@ -57,12 +50,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //在设置关联表
         //获取标签的id
         List<Integer> tagIdList = addArticleVO.getTagIdList();
-        LoggerInfo.initialization()
-                .loggerName("com.white.service.ArticleServiceImpl")
-                .messages("ArticleServiceImpl:")
-//                .messages("addArticleVO.getTagIdList():",addArticleVO.getTagIdList())
-                .messages("tagIdList:",tagIdList)
-                .output();
+//        LoggerInfo.initialization()
+//                .loggerName("com.white.service.ArticleServiceImpl")
+//                .messages("ArticleServiceImpl:")
+////                .messages("addArticleVO.getTagIdList():",addArticleVO.getTagIdList())
+//                .messages("tagIdList:",tagIdList)
+//                .output();
 
         //获取文章主键id
         Integer articleId = article.getId();
@@ -109,8 +102,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return this.baseMapper.getArticlesByCategory(sqlQueryNumber,pageSize,categoryName);
     }
 
-//    @Override
-//    public List<Article> getArticleById(Integer articleId) {
-//        return this.baseMapper.getArticleById(articleId);
-//    }
+    private Article voToArticle(AddArticleVO addArticleVO){
+        Article article = new Article();
+            article.setId(addArticleVO.getId());
+            article.setTitle(addArticleVO.getTitle());
+            article.setPicture(addArticleVO.getPicture());
+            article.setCategoryId(addArticleVO.getCategoryId());
+            article.setContent(addArticleVO.getContent());
+            article.setTop(addArticleVO.isTop());
+            article.setDraft(addArticleVO.isDraft());
+
+            article.setWords(addArticleVO.getWords());
+            article.setDescription(addArticleVO.getDescription());
+            article.setUserId(addArticleVO.getUserId());
+            article.setStatus(addArticleVO.getStatus());
+            return article;
+    }
+
 }

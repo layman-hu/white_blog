@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.white.vo.AddArticleVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -64,6 +63,22 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "是否存草稿 0不存草稿 1存草稿")
     @TableField("IS_DRAFT")
     private boolean isDraft;
+
+    @ApiModelProperty(value = "文章字数")
+    @TableField("WORDS")
+    private Integer words;
+
+    @ApiModelProperty(value = "文章摘要，文章前100字")
+    @TableField("DESCRIPTION")
+    private String description;
+
+    @ApiModelProperty(value = "文章作者id")
+    @TableField("USER_ID")
+    private Integer userId;
+
+    @ApiModelProperty(value = "文章状态 0隐藏 1公开")
+    @TableField("STATUS")
+    private Integer status;
 
 //    public Article(AddArticleVO addArticleVO) {
 //        this.id = addArticleVO.getId();

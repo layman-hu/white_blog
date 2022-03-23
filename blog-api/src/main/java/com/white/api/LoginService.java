@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public interface LoginService {
 
-    HashMap<String, String> login(User user);
+    HashMap<String, Object> login(User user);
 
     Boolean logout();
 }

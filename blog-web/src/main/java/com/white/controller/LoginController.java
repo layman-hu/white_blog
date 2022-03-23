@@ -5,33 +5,34 @@ import com.white.api.LoginService;
 import com.white.domain.ResultInfo;
 import com.white.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
+/**
+ * @author Administrator
+ */
 @RestController
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/user/login")
+
+    @PostMapping("/login")
     public Result login(@RequestBody User user){
-        HashMap<String, String> map =  loginService.login(user);
+        HashMap<String, Object> map =  loginService.login(user);
         if(map.isEmpty()){
             return Result.error().codeAndMessage(ResultInfo.LOGIN_FAIL);
         }else {
             return Result.success()
                     .codeAndMessage(ResultInfo.LOGIN_SUCCESS)
-                    .data("token",map.get("token"));
+                    .data("token",map.get("token"))
+                    .data("user",map.get("user"));
         }
-
     }
 
-    @RequestMapping("/user/logout")
+    @RequestMapping("/logout")
     public Result logout(){
         boolean logoutFlag = loginService.logout();
         if(logoutFlag){

@@ -64,7 +64,7 @@ public class ArticleController {
         List<ArticleListDTO> articleListDTOList = articleService.listArticlePage(currentPageNumber, pageSize, queryTitleKeyword);
 
         //查询关键字不为空
-        if (!queryTitleKeyword.equals("")){
+        if (!"".equals(queryTitleKeyword)){
             //通过关键字查询后，列表不为空
             if(!articleListDTOList.isEmpty()){
                 articleListSize = articleListDTOList.size();
@@ -74,15 +74,18 @@ public class ArticleController {
             }
         }
         //查询文章id对应的标签列表，并将其加入articleListDTOList内
-        for(int i=0; i<articleListDTOList.size(); i++){
-            Integer articleId = articleListDTOList.get(i).getArticleId();
+        for (ArticleListDTO articleListDTO : articleListDTOList) {
+            Integer articleId = articleListDTO.getId();
 
             /**
              * ArticleListDTO的私有变量tagList必须初始化
              * 即
              * private List<String> tagList = new ArrayList<>();
+             *
+             * todo foreach遍历问题，能否改变列表元素的内容
+             * 这里我不太理解，foreach遍历可以改变列表内容的吗，这和我以前学习的知识相冲突
              */
-            articleListDTOList.get(i).getTagIdList().addAll(tagService.getTagIdListByArticleId(articleId));
+            articleListDTO.getTagIdList().addAll(tagService.getTagIdListByArticleId(articleId));
         }
 
         if(!articleListDTOList.isEmpty()){
@@ -108,28 +111,16 @@ public class ArticleController {
     }
 
     @ApiOperation("根据文章ID，获取文章")
-    @GetMapping(value = {"/getArticleById","/{articleId}"})
+    @GetMapping("/getArticleById")
     public Result getArticleById(@RequestParam("articleId")Integer articleId){
         Article article = articleService.getById(articleId);
-
-//        List<Article> articleList = articleService.getArticleById(articleId);
 
         if (article == null){
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND)
                     .codeAndMessage("404","文章不存在");
         }else {
-            ArticleDTO articleDTO = new ArticleDTO();
-                articleDTO.setArticleId(articleId);
-                articleDTO.setArticleTitle(article.getTitle());
-                articleDTO.setPicture(article.getPicture());
-                articleDTO.setContent(article.getContent());
-                articleDTO.setCategory(categoryService.getById(article.getCategoryId()));
-                articleDTO.setCreateTime(article.getCreateTime());
-                articleDTO.setUpdateTime(article.getUpdateTime());
-                articleDTO.setIsTop(article.isTop());
-                //标签没找到则为空
-                articleDTO.setTagList(tagService.getTagListByArticleId(articleId));
 
+            ArticleDTO articleDTO = articleToArticleDTO(article);
 
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
@@ -141,32 +132,22 @@ public class ArticleController {
     @GetMapping("/homePageArticles")
     public Result homePageArticles(@RequestParam("currentPageNumber")Integer currentPageNumber, @RequestParam("pageSize")Integer pageSize){
         List<Article> articleList = articleService.homePageArticles(currentPageNumber,pageSize);
-        Integer allArticleNumber = articleService.count();
+
+        //只计算公开的文章数量，隐藏的文章不在计数范围之内
+        Integer allArticleNumber = articleService.count(new QueryWrapper<Article>().eq("STATUS",1));
 
         if(articleList.isEmpty()){
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
         }else {
-            List<ArticleDTO> articleDTOS = new ArrayList<>();
+            List<ArticleDTO> articleListResult = new ArrayList<>();
             for(Article article:articleList){
-                Integer articleId = article.getId();
-
-                ArticleDTO temp = new ArticleDTO();
-                temp.setArticleId(articleId);
-                temp.setArticleTitle(article.getTitle());
-                temp.setPicture(article.getPicture());
-                temp.setContent(article.getContent());
-                temp.setCategory(categoryService.getById(article.getCategoryId()));
-                temp.setCreateTime(article.getCreateTime());
-                temp.setUpdateTime(article.getUpdateTime());
-                temp.setIsTop(article.isTop());
-                temp.setTagList(tagService.getTagListByArticleId(articleId));
-
-                articleDTOS.add(temp);
+                ArticleDTO temp = articleToArticleDTO(article);
+                articleListResult.add(temp);
             }
 
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("articleList",articleDTOS)
+                    .data("articleList",articleListResult)
                     .data("currentPageNumber",currentPageNumber)
                     .data("total",allArticleNumber);
 
@@ -181,39 +162,23 @@ public class ArticleController {
         List<Article> articleList = articleService.getArticlesByCategory(currentPageNumber,pageSize,categoryName);
 
         Category category = categoryService.getOne( new QueryWrapper<Category>().eq("CATEGORY",categoryName));
-        System.out.println("category");
-        System.out.println(category);
+        Integer allArticleNumber = articleService.count(new QueryWrapper<Article>().eq("STATUS",1).eq("CATEGORY_ID",category.getId()));
 
-        QueryWrapper<Article> queryWrapper = new QueryWrapper();
-        Integer allArticleNumber = articleService.count(queryWrapper.eq("CATEGORY_ID",category.getId()));
-        System.out.println("allArticleNumber");
-        System.out.println(allArticleNumber);
 
 
         if(articleList.isEmpty()){
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
         }else {
-            List<ArticleDTO> articleDTOS = new ArrayList<>();
+            List<ArticleDTO> articleListResult = new ArrayList<>();
             for(Article article:articleList){
-                Integer articleId = article.getId();
+                ArticleDTO temp = articleToArticleDTO(article,category);
 
-                ArticleDTO temp = new ArticleDTO();
-                temp.setArticleId(articleId);
-                temp.setArticleTitle(article.getTitle());
-                temp.setPicture(article.getPicture());
-                temp.setContent(article.getContent());
-                temp.setCategory(category);
-                temp.setCreateTime(article.getCreateTime());
-                temp.setUpdateTime(article.getUpdateTime());
-                temp.setIsTop(article.isTop());
-                temp.setTagList(tagService.getTagListByArticleId(articleId));
-
-                articleDTOS.add(temp);
+                articleListResult.add(temp);
             }
 
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("articleList",articleDTOS)
+                    .data("articleList",articleListResult)
                     .data("currentPageNumber",currentPageNumber)
                     .data("total",allArticleNumber);
 
@@ -224,8 +189,8 @@ public class ArticleController {
     @GetMapping("/archives")
     public Result archives(@RequestParam(value = "currentPageNumber", defaultValue = "1",required = true)Integer currentPageNumber,
                            @RequestParam(value = "pageSize", defaultValue = "10", required = true)Integer pageSize){
-        List<Article> articleList = articleService.list(new QueryWrapper<Article>().orderByDesc("CREATE_TIME"));
-        Integer allArticleNumber = articleService.count();
+        List<Article> articleList = articleService.list(new QueryWrapper<Article>().eq("STATUS",1).orderByDesc("CREATE_TIME"));
+        Integer allArticleNumber = articleService.count(new QueryWrapper<Article>().eq("STATUS",1));
         if(articleList.isEmpty()){
             return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
         }else {
@@ -236,20 +201,66 @@ public class ArticleController {
         }
     }
 
-    @ApiOperation("点击封面进入文章，前端根据文章id查询文章")
-    @GetMapping("/articleList/{articleId}")
-    public Result getArticleAndTagsByArticleId(@PathVariable("articleId")Integer articleId){
-        Article article = articleService.getById(articleId);
-        if(article == null){
-            return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
-        }else {
-            return Result.success()
-                    .codeAndMessage(ResultInfo.SUCCESS)
-                    .data("article",article)
-                    .data("tagIdList",tagService.getTagIdListByArticleId(articleId));
-        }
+    @ApiOperation("关于作者的简介文章")
+    @GetMapping("/about")
+    public Result getAuthorArticle(){
+        //这就没什么了，通过上帝视角，直接查简介文章的id
+        Article article = articleService.getById(20);
 
+        ArticleDTO temp = articleToArticleDTO(article);
+
+        return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("article",temp);
     }
+
+    private ArticleDTO articleToArticleDTO(Article article){
+        Integer articleId = article.getId();
+
+        ArticleDTO articleDTO = new ArticleDTO();
+        articleDTO.setId(articleId);
+        articleDTO.setTitle(article.getTitle());
+        articleDTO.setPicture(article.getPicture());
+        articleDTO.setContent(article.getContent());
+        articleDTO.setCategory(categoryService.getById(article.getCategoryId()));
+        articleDTO.setCreateTime(article.getCreateTime());
+        articleDTO.setUpdateTime(article.getUpdateTime());
+        articleDTO.setIsTop(article.isTop());
+
+        articleDTO.setDraft(article.isDraft());
+        articleDTO.setWords(article.getWords());
+        articleDTO.setDescription(article.getDescription());
+        articleDTO.setUserId(article.getUserId());
+        articleDTO.setStatus(article.getStatus());
+
+        //标签没找到则为空
+        articleDTO.setTagList(tagService.getTagListByArticleId(articleId));
+
+        return articleDTO;
+    }
+
+    private ArticleDTO articleToArticleDTO(Article article,Category category){
+        Integer articleId = article.getId();
+
+        ArticleDTO articleDTO = new ArticleDTO();
+        articleDTO.setId(articleId);
+        articleDTO.setTitle(article.getTitle());
+        articleDTO.setPicture(article.getPicture());
+        articleDTO.setContent(article.getContent());
+        articleDTO.setCategory(category);
+        articleDTO.setCreateTime(article.getCreateTime());
+        articleDTO.setUpdateTime(article.getUpdateTime());
+        articleDTO.setIsTop(article.isTop());
+
+        articleDTO.setDraft(article.isDraft());
+        articleDTO.setWords(article.getWords());
+        articleDTO.setDescription(article.getDescription());
+        articleDTO.setUserId(article.getUserId());
+        articleDTO.setStatus(article.getStatus());
+        //标签没找到则为空
+        articleDTO.setTagList(tagService.getTagListByArticleId(articleId));
+
+        return articleDTO;
+    }
+
 
 }
 

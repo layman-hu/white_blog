@@ -25,4 +25,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public List<RoleDTO> getRoleList() {
         return this.baseMapper.getRoleList();
     }
+
+    @Override
+    public List<Role> getRoleListByUsername(String username) {
+        return this.baseMapper.getRoleListByUsername(username);
+    }
+
+    @Override
+    public String getRoleNameByUserId(String userId) {
+        return this.baseMapper.getRoleNameByUserId(userId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.white.utils;
 
+import com.white.domain.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -77,6 +78,7 @@ public class RedisCache
         ValueOperations<String, T> operation = redisTemplate.opsForValue();
         return operation.get(key);
     }
+
 
     /**
      * 删除单个对象
@@ -235,4 +237,6 @@ public class RedisCache
     {
         return redisTemplate.keys(pattern);
     }
+
+
 }

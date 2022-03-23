@@ -1,0 +1,9 @@
+
+q
+java:S1128"ORemove this unused import 'com.fasterxml.jackson.core.JsonProcessingException'.(ßÔïÇûÿÿÿÿ8ÍîŠ˜õ/
+f
+java:S1192<"IDefine a constant instead of duplicating this literal "userList" 3 times.(ö‡¥Ë8Èëœ¬ô/
+m
+java:S1192("PDefine a constant instead of duplicating this literal "UserController:" 3 times.(ÙµÑ«8Éëœ¬ô/
+€
+java:S1192'"dDefine a constant instead of duplicating this literal "com.white.controller.UserController" 3 times.(Ä¨ñb8Éëœ¬ô/

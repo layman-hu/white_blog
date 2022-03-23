@@ -10,4 +10,22 @@
         from tb_role a
         group by a.ROLE_NAME
     </select>
+    <select id="getRoleListByUsername" resultType="com.white.entity.Role">
+        select
+        b.ID,
+        b.ROLE_NAME,
+        b.CREATE_TIME
+        from tb_user a, tb_role b, con_role_user c
+        where a.USERNAME=#{username} and
+        a.ID = c.USER_ID and
+        b.ID = c.ROLE_ID
+    </select>
+    <select id="getRoleNameByUserId" resultType="java.lang.String">
+        select
+        b.ROLE_NAME
+        from tb_user a, tb_role b, con_role_user c
+        where a.ID=#{userId} and
+        a.ID=c.USER_ID and
+        b.ID=c.ROLE_ID
+    </select>
 </mapper>

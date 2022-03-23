@@ -16,13 +16,13 @@ import java.util.List;
 public class ArticleListDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer articleId;
-    private String articleTitle;
+    private Integer id;
+    private String title;
     private Integer categoryId;
-
     private Date createTime;
     private Date updateTime;
     private Boolean isTop;
+    private Integer status;
 
     private List<Integer> tagIdList = new ArrayList<>();
 }

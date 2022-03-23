@@ -1,10 +1,11 @@
 package com.white.service;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.white.domain.LoggerInfo;
+import com.white.api.RoleService;
 import com.white.api.MenuService;
 import com.white.entity.Menu;
 import com.white.mapper.MenuMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -21,6 +22,9 @@ import java.util.List;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     public List<Menu> getAllMenuListByUserRole(String roleName) {
 
@@ -33,12 +37,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             //通过角色名，返回对应权限的所有菜单目录（目录未排序整理）
             List<Menu> menuList = this.baseMapper.getAllMenuList(roleName);
 
-            LoggerInfo.initialization()
-                    .loggerName("com.white.service.MenuServiceImpl")
-                    .messages("MenuServiceImpl:")
-                    .messages("后台管理菜单，递归查询")
-                    .messages("menuList",menuList)
-                    .output();
 
             //未访问标false，访问标true
             boolean []isMenuVisited = new boolean[menuList.size()];
@@ -88,6 +86,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return menuParent.getChildren();
     }
 
+    @Override
+    public List<Menu> getMenuListByUserId(String userId) {
+        //todo 目前一个用户对应一个角色，之后可以拓展，或者优化结构
+        String roleName = roleService.getRoleNameByUserId(userId);
+
+        return getAllMenuListByUserRole(roleName);
+    }
+
     //查找并链接子菜单
     private void findChildren(Menu parentMenu, List<Menu> menuList, boolean[] isMenuVisited){
         //1.判断父菜单本身     是否存在子菜单
@@ -115,32 +121,4 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
 
     }
-//    private void findChildren(Menu parentMenu, List<Menu> childrenMenuList){
-//        Iterator<Menu> it = null;
-//        if(childrenMenuList.size()>0){
-//            it = childrenMenuList.iterator();
-//        }else {
-//            return;
-//        }
-//
-//        while (it.hasNext()){
-//            Menu childrenMenu = it.next();
-//            //父菜单的id  与 子菜单中的父菜单id 相同，进行链接
-//            if(parentMenu.getId().equals(childrenMenu.getParentId())){
-//                parentMenu.getChildren().add(childrenMenu);
-//                it.remove();
-//            }
-//        }
-//
-//        if(parentMenu.getChildren().size() <= 0){
-//            //父菜单不包含子菜单（下一级菜单）
-//            return;
-//        }else{
-//            //父菜单包含子菜单，再对子菜单进行 查找并链接子菜单
-//            for(Menu parentMenu2:parentMenu.getChildren()){
-//                findChildren(parentMenu2,childrenMenuList);
-//            }
-//        }
-//
-//    }
 }

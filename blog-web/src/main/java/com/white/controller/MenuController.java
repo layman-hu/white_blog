@@ -40,5 +40,16 @@ public class MenuController {
             return Result.error();
         }
     }
+
+    @ApiOperation("根据用户ID获取对应权限的菜单")
+    @GetMapping("/getMenuListByUserId")
+    public Result getMenuListByUserId(@RequestParam("userId")String userId){
+        List<Menu> menuList = menuService.getMenuListByUserId(userId);
+        if(!menuList.isEmpty()) {
+            return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("menuList",menuList);
+        }else {
+            return Result.error();
+        }
+    }
 }
 

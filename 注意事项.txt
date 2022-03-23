@@ -1,3 +1,6 @@
+
+
+
 enable:
   swagger2: true
  application.yml这里，上线时改成false
@@ -27,24 +30,40 @@ enable:
  打好mysql基础
 
 
-     <insert id="saveOrUpdateConArticleTag" useGeneratedKeys="true">
-         <selectKey keyProperty="count" resultType="int" order="BEFORE">
-             select count(*) from con_article_tag where ARTICLE_ID=#{articleId}
-         </selectKey>
-         <if test="count>0">
-             <foreach collection="tagIdList" separator=";" item="item">
-                 update
-                 con_article_tag a
-                 set a.TAG_ID=#{item}
-                 where a.ARTICLE_ID=#{articleId}
-             </foreach>
-         </if>
-         <if test="count==0">
-             insert
-             con_article_tag(ARTICLE_ID,TAG_ID)
-             values
-             <foreach collection="tagIdList" separator="," item="item">
-                 (#{articleId},#{item})
-             </foreach>
-         </if>
-     </insert>
+MybatisPlus结构：
+Controller层，加注解@RestController
+Service层extends IService<对应实体类>
+Impl层实现Service操作，加注解@Service
+Mapper层，加注解@Mapper
+
+list集合未分配空间时，其值为null。应当用list == null来判断。用list的任何方法都会抛出空指针异常
+
+而list使用new ArrayList<>()初始化时，已分配空间，但内容为空。可用isEmpty()来判断。
+
+
+
+
+启动三个步骤
+IDEA,VSCODE,Redis
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+
+            fastjson.version版本1.2.62有bug，有时候会导致redisCache取出对象后，转换对象失败。转换成1.2.79版本后一切正常。
+
+
+            Springboot引入依赖的时候，选择的依赖版本的发行时间尽量在当前Springboot版本的发行时间之后。
+
+redis缓存可以直接设置存入的值的有效时间，有效时间过去之后，redis自动将其删除
+Jwt生成的token中，已经包含了有效时间，过期之后，token解析失败，提示token非法
+
+
+
+
+
+

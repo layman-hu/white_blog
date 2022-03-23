@@ -27,7 +27,6 @@
             and a.NICK_NAME like concat(concat('%',#{userQueryVO.nickName}),'%')
         </if>
         <!--用户列表分页  limit#{startindex},#{pagesize}-->
-        limit #{userQueryVO.currentPageNumber},#{userQueryVO.pageSize}<!---->
-        <!--LIMIT 0,2-->
+        limit #{userQueryVO.sqlQueryNumber},#{userQueryVO.pageSize}
     </select>
 </mapper>

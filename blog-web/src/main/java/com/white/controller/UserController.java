@@ -8,6 +8,8 @@ import com.white.api.UserService;
 import com.white.dto.UserDTO;
 import com.white.vo.UserQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,20 +27,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class UserController {
     @Autowired
     private UserService userService;
-
 
     @GetMapping("/getUserRolesByUserId")
     public Result getUserRolesByUserId(Integer id) {
         List<String> roleList = userService.getUserRolesByUserId(id);
         if(!roleList.isEmpty()){
-            LoggerInfo.initialization()
-                    .loggerName("com.white.controller.UserController")
-                    .messages("UserController:")
-                    .messages("roleList",roleList)
-                    .output();
+//            LoggerInfo.initialization()
+//                    .loggerName("com.white.controller.UserController")
+//                    .messages("UserController:")
+//                    .messages("roleList",roleList)
+//                    .output();
             return Result.success()
                     .codeAndMessage(ResultInfo.SUCCESS)
                     .data("roleList",roleList);
@@ -48,17 +50,18 @@ public class UserController {
     }
 
     @GetMapping("/getUserList")
+    @PreAuthorize("hasAnyAuthority('ADMIN','test')")
     public Result getUserList(UserQueryVO userQueryVO) {
         List<UserDTO> userList = userService.getUserByCondition(userQueryVO);
         if(!userList.isEmpty()){
             int userListSize = userList.size();
 
-            LoggerInfo.initialization()
-                    .loggerName("com.white.controller.UserController")
-                    .messages("UserController:")
-                    .messages("userList",userList)
-                    .messages("userListSize",userListSize)
-                    .output();
+//            LoggerInfo.initialization()
+//                    .loggerName("com.white.controller.UserController")
+//                    .messages("UserController:")
+//                    .messages("userList",userList)
+//                    .messages("userListSize",userListSize)
+//                    .output();
 
 
             return Result.success()
@@ -67,12 +70,12 @@ public class UserController {
                     .data("userListSize",userListSize);
         }
         else {
-            LoggerInfo.initialization()
-                    .loggerName("com.white.controller.UserController")
-                    .messages("UserController:")
-                    .messages("userList",userList)
-                    .messages(ResultInfo.NOT_FOUND.toString())
-                    .output();
+//            LoggerInfo.initialization()
+//                    .loggerName("com.white.controller.UserController")
+//                    .messages("UserController:")
+//                    .messages("userList",userList)
+//                    .messages(ResultInfo.NOT_FOUND.toString())
+//                    .output();
             return Result.error()
                     .codeAndMessage(ResultInfo.NOT_FOUND);
         }

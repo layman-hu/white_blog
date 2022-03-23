@@ -16,8 +16,8 @@ import java.util.List;
 public class ArticleDTO  implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer articleId;
-    private String articleTitle;
+    private Integer id;
+    private String title;
     private String picture;
     private String content;
     private Category category;
@@ -25,6 +25,12 @@ public class ArticleDTO  implements Serializable {
     private Date createTime;
     private Date updateTime;
     private Boolean isTop;
+
+    private boolean isDraft;
+    private Integer words;
+    private String description;
+    private Integer userId;
+    private Integer status;
 
     private List<Tag> tagList;
 }

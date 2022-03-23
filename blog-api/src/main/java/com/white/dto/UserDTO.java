@@ -14,27 +14,33 @@ import java.util.Date;
 @Data
 public class UserDTO {
 
-    @ApiModelProperty(value = "用户ID")
-//    @TableId(value = "ID")
+    /**
+     * 用户ID
+     */
     private Integer id;
 
-    @ApiModelProperty(value = "头像，地址")
-//    @TableField("AVATAR")
+    /**
+     * 头像，地址
+     */
     private String avatar;
 
-    @ApiModelProperty(value = "昵称")
-//    @TableField("NICK_NAME")
+    /**
+     * 昵称
+     */
     private String nickName;
 
-    @ApiModelProperty(value = "创建时间")
-//    @TableField("CREATE_TIME")
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
-    @ApiModelProperty(value = "更新时间")
-//    @TableField("UPDATE_TIME")
+    /**
+     * 更新时间
+     */
     private Date updateTime;
 
-    @ApiModelProperty(value = "1禁言 0正常发言")
-//    @TableField("IS_SILENCE")
+    /**
+     * 1禁言 0正常发言
+     */
     private Boolean isSilence;
 }

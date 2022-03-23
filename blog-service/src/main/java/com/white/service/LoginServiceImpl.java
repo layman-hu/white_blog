@@ -1,8 +1,9 @@
 package com.white.service;
 
 import com.white.api.LoginService;
+
 import com.white.domain.LoginUser;
-import com.white.domain.ResultInfo;
+import com.white.dto.LoginUserDTO;
 import com.white.entity.User;
 import com.white.utils.JwtUtil;
 import com.white.utils.RedisCache;
@@ -16,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * @author Administrator
+ */
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -26,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
     private RedisCache redisCache;
 
     @Override
-    public HashMap<String, String> login(User user) {
+    public HashMap<String, Object> login(User user) {
         //AuthenticationManager authenticate进行用户认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 
@@ -40,8 +44,15 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("token",jwt);
+        /**
+         * 返回一个前端user实体类
+         * 实体类包括id，username，avatar
+         */
+        LoginUserDTO userDTO = new LoginUserDTO(loginUser.getUser().getId(),loginUser.getUser().getUsername(),loginUser.getUser().getAvatar());
+        map.put("user",userDTO);
+
         //把完整用户信息存入redis   userId作为key
         redisCache.setCacheObject("login:"+userId,loginUser);
 

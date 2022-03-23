@@ -6,6 +6,8 @@ mybatis-plus:
 
 server:
   port: 8090
+  ip: 4537837837
+
 
 
 spring:
@@ -13,9 +15,14 @@ spring:
     name: blog-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/white_blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimeZone=UTC
+#    url: jdbc:mysql://127.0.0.1:3306/white_blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimeZone=UTC
+#    username: root
+#    password: 123456
+
+    url: jdbc:mysql://${server.ip}:3306/white_blog?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimeZone=GMT%2B8
     username: root
-    password: 123456
+    password: 3437/374678673
+
     hikari:
       minimum-idle: 5
       # 空闲连接存活最大时间，默认600000（10分钟）
@@ -32,6 +39,11 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
+  redis:
+    host: ${server.ip}
+    port: 6379
+    password: 3453783794537
+
 #white:
 #  jwt:
 #    # 部署上线务必修改此配置，以保证token的安全性
@@ -40,8 +52,8 @@ spring:
 #    header: token
 white:
   token:
-    secretKey: aw5rg16se5r4h8s6er1h6seh84
-    validTime: 3*60*1000
+    JWT_KEY: aw5rg16se5r4h8s6er1h6seh84
+    JWT_TTL: 60 * 60 *1000L
     header: token
 
 ##redis配置
